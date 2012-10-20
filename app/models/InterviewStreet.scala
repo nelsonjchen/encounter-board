@@ -33,6 +33,7 @@ object InterviewStreet {
   }
 
   def scrape(teamname: String, passcode: String, team_names:List[String]): List[Team] = {
+    val teams = team_names.par.map(name => {
     val client = new WebClient()
     client.setJavaScriptEnabled(false)
     client.setThrowExceptionOnScriptError(false)
@@ -44,13 +45,12 @@ object InterviewStreet {
     name_input.setValueAttribute(teamname)
     code_input.setValueAttribute(passcode)
     submit_input.click()
-    val teams = team_names.map(name => {
       val leader_url = "https://ieee.interviewstreet.com/challenges/rest/leaderboard/lid/default/page/1/json?filter=" + name
       val solved_url = "https://ieee.interviewstreet.com/challenges/rest/solved/handle/" + name
       val leader_src = client.getPage(leader_url).asInstanceOf[Page].getWebResponse.getContentAsString
       val solved_src = client.getPage(solved_url).asInstanceOf[Page].getWebResponse.getContentAsString
       parseTeam(leader_src,solved_src)
-    })
+    }).filter(t => !t.name.equals("Unknown Team")).toList
 
     teams
   }
