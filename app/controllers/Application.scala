@@ -1,6 +1,7 @@
 package controllers
 
 import play.api._
+import cache.Cache
 import libs.json.{JsValue, Json}
 import play.api.mvc._
 import libs.concurrent.Akka
@@ -32,10 +33,14 @@ object Application extends Controller {
       val team_code = current.configuration.getString("ieeextreme.code").get
       val team_list = current.configuration.getString("ieeextreme.teams").get.split(":").toList
 
-      InterviewStreet.scrape(team_name, team_code, team_list)
+      val team = Cache.getOrElse[List[Team]]("dash", 60){
+        InterviewStreet.scrape(team_name, team_code, team_list)
+      }
+      team
     }
     Async {
       promiseOfTeams.map(lt => {
+
         Ok(views.html.dash(lt))
       })
     }
