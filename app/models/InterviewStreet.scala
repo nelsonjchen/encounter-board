@@ -38,7 +38,7 @@ object InterviewStreet {
     val form: HtmlForm = login_page.getForms.get(0)
     val name_input: HtmlTextInput = form.getInputByName("teamname")
     val code_input: HtmlPasswordInput = form.getInputByName("passcode")
-    val submit_input: HtmlSubmitInput = form.getInputByName("login")
+    val submit_input: HtmlSubmitInput = form.getInputByName("submit")
     name_input.setValueAttribute(teamname)
     code_input.setValueAttribute(passcode)
     submit_input.click()
