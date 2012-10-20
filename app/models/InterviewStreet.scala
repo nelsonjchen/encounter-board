@@ -11,7 +11,11 @@ object InterviewStreet {
     val leader = Json.parse(leader_json)
     val solved = Json.parse(solved_json)
 
-    Team("TestTeam", 45, List[String]())
+    val team_leader = (leader \ "models")(0)
+    val rank = (team_leader \ "rank").asOpt[Int].getOrElse(9999)
+    val name = (team_leader \ "details" \ "handle").asOpt[String].getOrElse("Unknown Team")
+
+    Team(name, rank, List[String]())
   }
 
   def scores():List[Team] = {
