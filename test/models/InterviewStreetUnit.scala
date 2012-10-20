@@ -14,6 +14,14 @@ class InterviewStreetUnit extends Specification {
       val json = getJSON("leader_hk.json")
       json must contain("models")
     }
+    "parse TeamJacob correctly" in {
+      val leader_jacob = getJSON("leader_jacob.json")
+      val solved_one_jacob = getJSON("solved_one_jacob.json")
+      val team = parseTeam(leader_jacob,solved_one_jacob)
+      team.name must equalTo("TeamJacob")
+      team.rank must equalTo(58)
+      team.complete.length must equalTo(1)
+    }
   }
 
   def getJSON(name:String): String = {
