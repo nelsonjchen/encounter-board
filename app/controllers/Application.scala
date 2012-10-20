@@ -1,10 +1,13 @@
 package controllers
 
 import play.api._
+import libs.json.{JsValue, Json}
 import play.api.mvc._
 import libs.concurrent.Akka
 import models.InterviewStreet
 import play.api.Play.current
+import Json.toJson
+import models.Team
 
 object Application extends Controller {
   
@@ -17,7 +20,9 @@ object Application extends Controller {
       InterviewStreet.test_scrape()
     }
     Async{
-      promiseOfTeams.map(lt => Ok(lt.toString()))
+      promiseOfTeams.map(lt => {
+        Ok(lt)
+      })
     }
   }
   
