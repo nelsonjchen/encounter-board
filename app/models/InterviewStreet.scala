@@ -1,6 +1,6 @@
 package models
 
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, Json}
 
 case class Team(name: String, rank: Int, complete: List[String]) extends Ordered[Team] {
   def compare(that: Team) = rank.compare(that.rank)
@@ -15,7 +15,12 @@ object InterviewStreet {
     val rank = (team_leader \ "rank").asOpt[Int].getOrElse(9999)
     val name = (team_leader \ "details" \ "handle").asOpt[String].getOrElse("Unknown Team")
 
-    Team(name, rank, List[String]())
+    val complete = (solved \ "model") match {
+      case JsObject(fields) => fields.toMap.map(t=>t._2.asOpt[String].getOrElse("Unknown"))
+      case _ => List[String]()
+    }
+
+    Team(name, rank, complete.toList)
   }
 
   def scores():List[Team] = {
