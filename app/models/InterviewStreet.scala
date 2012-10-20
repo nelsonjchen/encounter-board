@@ -2,7 +2,9 @@ package models
 
 import play.api.libs.json.{JsObject, Json}
 import com.gargoylesoftware.htmlunit.WebClient
-import com.gargoylesoftware.htmlunit.html.{HtmlPasswordInput, HtmlTextInput, HtmlForm, HtmlPage}
+import com.gargoylesoftware.htmlunit.html._
+import play.api.libs.json.JsObject
+import models.Team
 
 case class Team(name: String, rank: Int, complete: List[String]) extends Ordered[Team] {
   def compare(that: Team) = rank.compare(that.rank)
@@ -29,20 +31,26 @@ object InterviewStreet {
     List[Team]()
   }
 
-  def scrape(teamname: String, passcode: String): List[Team] = {
+  def scrape(teamname: String, passcode: String, team_names:List[String]): List[Team] = {
     val client = new WebClient()
-    client.setJavaScriptEnabled(true)
+    client.setJavaScriptEnabled(false)
     client.setThrowExceptionOnScriptError(false)
     val login_page: HtmlPage = client.getPage("https://ieee.interviewstreet.com/challenges/login/invitee")
     val form: HtmlForm = login_page.getForms.get(0)
     val name_input: HtmlTextInput = form.getInputByName("teamname")
     val code_input: HtmlPasswordInput = form.getInputByName("passcode")
+    val submit_input: HtmlSubmitInput = form.getInputByName("login")
     name_input.setValueAttribute(teamname)
     code_input.setValueAttribute(passcode)
+    submit_input.click()
+    val teams = team_names.map(name => {
+      val leader_url = "https://ieee.interviewstreet.com/challenges/rest/leaderboard/lid/default/page/1/json?filter=" + name
+      val solved_url = "https://ieee.interviewstreet.com/challenges/rest/solved/handle/" + name
+      val leader_src = client.getPage(leader_url).getWebResponse.getContentAsString
+      val solved_src = client.getPage(solved_url).getWebResponse.getContentAsString
+      parseTeam(leader_src,solved_src)
+    })
 
-
-
-
-    List[Team]()
+    teams
   }
 }
