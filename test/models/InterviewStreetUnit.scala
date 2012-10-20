@@ -22,6 +22,14 @@ class InterviewStreetUnit extends Specification {
       team.rank must equalTo(58)
       team.complete.length must equalTo(1)
     }
+    "parse TeamHK correctly" in {
+      val leader = getJSON("leader_hk.json")
+      val solved = getJSON("solved_none_hk.json")
+      val team = parseTeam(leader, solved)
+      team.name must equalTo("TeamHK")
+      team.rank must equalTo(336)
+      team.complete.length must equalTo(0)
+    }
   }
 
   def getJSON(name:String): String = {
