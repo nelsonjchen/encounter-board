@@ -21,22 +21,22 @@ object Application extends Controller {
     }
     Async {
       promiseOfTeams.map(lt => {
-        Ok(lt)
+        Ok(lt.toString)
       })
     }
   }
 
   def dash = Action {
-    val team_name = current.configuration.getString("ieeextreme.login").get
-    val team_code = current.configuration.getString("ieeextreme.code").get
-    val team_list = current.configuration.getString("ieeextreme.teams").get.split(":").toList
-
     val promiseOfTeams = Akka.future {
+      val team_name = current.configuration.getString("ieeextreme.login").get
+      val team_code = current.configuration.getString("ieeextreme.code").get
+      val team_list = current.configuration.getString("ieeextreme.teams").get.split(":").toList
+
       InterviewStreet.scrape(team_name, team_code, team_list)
     }
     Async {
       promiseOfTeams.map(lt => {
-        Ok(lt)
+        Ok(lt.toString)
       })
     }
   }

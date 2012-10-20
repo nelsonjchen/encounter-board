@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index
 GET     /hack_dash                  controllers.Application.hack_dash
+GET     /dash                       controllers.Application.dash
 
 
 # Map static resources from the /public folder to the /assets URL path
