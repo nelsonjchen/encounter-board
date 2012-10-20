@@ -16,7 +16,7 @@ object InterviewStreet {
     val name = (team_leader \ "details" \ "handle").asOpt[String].getOrElse("Unknown Team")
 
     val complete = (solved \ "model") match {
-      case JsObject(fields) => fields.toMap.map(t=>t._2.asOpt[String].getOrElse("Unknown"))
+      case JsObject(fields) => fields.toMap.map(t=>t._2.asOpt[String].getOrElse("Unknown Problem"))
       case _ => List[String]()
     }
 
