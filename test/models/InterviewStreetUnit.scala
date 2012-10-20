@@ -14,9 +14,6 @@ class InterviewStreetUnit extends Specification {
       val json = getJSON("leader_hk.json")
       json must contain("models")
     }
-    "test right" in {
-      true
-    }
   }
 
   def getJSON(name:String): String = {
