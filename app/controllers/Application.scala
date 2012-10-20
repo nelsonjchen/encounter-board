@@ -36,7 +36,7 @@ object Application extends Controller {
     }
     Async {
       promiseOfTeams.map(lt => {
-        Ok(lt.toString)
+        Ok(lt.sorted.toString)
       })
     }
   }
