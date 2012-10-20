@@ -12,34 +12,30 @@
         </div>
         <div class="row">
             <div class="span12">
-<table class="table table-striped">
- <thead>
-<tr>
-<th>Rank</th>
-<th>Name</th>
-<th>Solved</th>
-</tr>
- </thead>
-    <tbody>
-    @for(team <- teams){
-        <tr>
-            <td><h2>@team.rank</h2></td>
-            <td><h1>@team.name</h1></td>
-            <td>
-                <ul>
-                    @for(s <- team.complete){
-                        <li><h3>@s</h3></li>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Solved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(team <- teams) {
+                        <tr>
+                            <td><h2>@team.rank</h2></td>
+                            <td><h1>@team.name</h1></td>
+                            <td>
+                                <ul>
+                                @for(s <- team.complete) {
+                                    <li><h3>@s</h3></li>
+                                }
+                                </ul>
+                            </td>
+                        </tr>
                     }
-                </ul>
-            </td>
-        </tr>
-    }
-
-    </tbody>
-
-</table>
-
-
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
