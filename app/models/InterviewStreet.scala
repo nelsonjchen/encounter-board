@@ -4,6 +4,8 @@ import play.api.libs.json.{JsObject, Json}
 import com.gargoylesoftware.htmlunit.WebClient
 import com.gargoylesoftware.htmlunit.html._
 import play.api.libs.json.JsObject
+import com.gargoylesoftware.htmlunit.Page
+
 
 case class Team(name: String, rank: Int, complete: List[String]) extends Ordered[Team] {
   def compare(that: Team) = rank.compare(that.rank)
@@ -45,8 +47,8 @@ object InterviewStreet {
     val teams = team_names.map(name => {
       val leader_url = "https://ieee.interviewstreet.com/challenges/rest/leaderboard/lid/default/page/1/json?filter=" + name
       val solved_url = "https://ieee.interviewstreet.com/challenges/rest/solved/handle/" + name
-      val leader_src = client.getPage(leader_url).asInstanceOf[HtmlPage].getWebResponse.getContentAsString
-      val solved_src = client.getPage(solved_url).asInstanceOf[HtmlPage].getWebResponse.getContentAsString
+      val leader_src = client.getPage(leader_url).asInstanceOf[Page].getWebResponse.getContentAsString
+      val solved_src = client.getPage(solved_url).asInstanceOf[Page].getWebResponse.getContentAsString
       parseTeam(leader_src,solved_src)
     })
 
