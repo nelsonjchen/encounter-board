@@ -21,7 +21,7 @@ object Application extends Controller {
     }
     Async {
       promiseOfTeams.map(lt => {
-        Ok(lt.toString)
+        Ok(views.html.dash(lt))
       })
     }
   }
