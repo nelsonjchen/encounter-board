@@ -21,14 +21,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @for(team <- teams) {
+                    @for(team <- teams.sorted) {
                         <tr>
                             <td><h2>@team.rank</h2></td>
                             <td><h1>@team.name</h1></td>
                             <td>
                                 <ul>
                                 @for(s <- team.complete) {
-                                    <li><h3>@s</h3></li>
+                                    <li><h4>@s</h4></li>
                                 }
                                 </ul>
                             </td>
