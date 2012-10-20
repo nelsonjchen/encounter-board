@@ -28,8 +28,8 @@ object InterviewStreet {
     Team(name, rank, complete.toList)
   }
 
-  def scores(): List[Team] = {
-    List[Team]()
+  def test_scrape(): List[Team] = {
+    List[Team](Team("TeamFake",42,List[String]("TC","TB")),Team("TeamHorsePorn",44,List[String]("TB")))
   }
 
   def scrape(teamname: String, passcode: String, team_names:List[String]): List[Team] = {
