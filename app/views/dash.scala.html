@@ -26,11 +26,9 @@
                             <td><h2>@team.rank</h2></td>
                             <td><h1>@team.name</h1></td>
                             <td>
-                                <ul>
                                 @for(s <- team.complete) {
-                                    <li><h4>@s</h4></li>
+                                    @s
                                 }
-                                </ul>
                             </td>
                         </tr>
                     }
