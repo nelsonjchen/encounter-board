@@ -9,8 +9,8 @@ import scala.io.Source
 
 class InterviewStreetTest extends Specification {
   "InterviewStreet" should {
-    "parse" in {
-      1 mustEqual 1
+    "be tested with a resource loader that works" in {
+
     }
   }
 
