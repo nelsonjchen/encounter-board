@@ -10,7 +10,7 @@ import Json.toJson
 import models.Team
 
 object Application extends Controller {
-  
+
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
   }
@@ -19,11 +19,26 @@ object Application extends Controller {
     val promiseOfTeams = Akka.future {
       InterviewStreet.test_scrape()
     }
-    Async{
+    Async {
       promiseOfTeams.map(lt => {
         Ok(lt)
       })
     }
   }
-  
+
+  def dash = Action {
+    val team_name = current.configuration.getString("ieeextreme.login").get
+    val team_code = current.configuration.getString("ieeextreme.code").get
+    val team_list = current.configuration.getString("ieeextreme.teams").get.split(":").toList
+
+    val promiseOfTeams = Akka.future {
+      InterviewStreet.scrape(team_name, team_code, team_list)
+    }
+    Async {
+      promiseOfTeams.map(lt => {
+        Ok(lt)
+      })
+    }
+  }
+
 }
